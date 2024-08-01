@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header>
       <div
-        className={`my-container shadow-header dark:shadow-none rounded-b-3xl ${
+        className={`my-container relative shadow-header dark:shadow-none rounded-b-3xl ${
           !user ? "flex justify-center" : ""
         }  dark:bg-slate-900 py-7 `}
       >
