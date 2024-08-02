@@ -10,7 +10,7 @@ export default function Header() {
           !user ? "flex justify-center" : ""
         }  dark:bg-slate-900 py-7 `}
       >
-        <ThemeSwitcher className="absolute top-6 left-6" />
+        <ThemeSwitcher className="absolute top-3 left-14" />
         <Link href="/" className=" font-semibold text-xl ">
           Guess The Word
         </Link>

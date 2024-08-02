@@ -1,9 +1,5 @@
-import Home from "@/pages/Home";
+import ProtectedHome from "@/components/elements/ProtectedHome";
 
 export default function Main() {
-  return (
-    <section>
-      <Home />
-    </section>
-  );
+  return <ProtectedHome />;
 }
