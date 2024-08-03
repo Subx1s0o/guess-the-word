@@ -152,7 +152,7 @@ const RegisterForm = () => {
           className="px-4 py-2 text-black dark:text-white"
         >
           Already have an account?{"  "}
-          <span className="underline font-medium">Sign-in</span>
+          <span className="underline font-medium">Sign-In</span>
         </button>
       </div>
     </div>
