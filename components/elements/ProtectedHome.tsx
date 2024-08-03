@@ -2,7 +2,7 @@
 
 import Home from "@/pages/Home";
 import WelcomePage from "@/pages/WelcomePage";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function ProtectedHome() {
   const [user, setUser] = useState<boolean>(false);
@@ -20,7 +20,15 @@ export default function ProtectedHome() {
 
   return (
     <section className=" flex-1 flex">
-      <div className="my-container">{user ? <Home /> : <WelcomePage />}</div>
+      <div className="my-container">
+        {user ? (
+          <Home />
+        ) : (
+          <Suspense fallback={null}>
+            <WelcomePage />
+          </Suspense>
+        )}
+      </div>
     </section>
   );
 }
