@@ -34,14 +34,14 @@ export default function AuthModal({ isOpen, onClose, mode }: ModalProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+          className="fixed inset-0  z-50 bg-black bg-opacity-50 flex items-center justify-center"
           variants={backdropVariants}
           initial="hidden"
           animate="visible"
           exit="hidden"
         >
           <motion.div
-            className="bg-white p-6 rounded-lg relative max-w-lg w-full"
+            className="bg-white dark:bg-slate-900 p-4 md:p-6 rounded-lg relative max-w-sm w-full md:max-w-lg"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
