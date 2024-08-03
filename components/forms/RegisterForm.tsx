@@ -89,7 +89,7 @@ const RegisterForm = () => {
                 validate: (value) =>
                   validator.validate(value) || "Invalid email address",
               })}
-              className={`dark:placeholder:text-gray-600
+              className={`dark:placeholder:text-gray-600 dark:text-black
  dark:bg-slate-300 border rounded px-4 py-2 mt-1 w-full outline-none ${
    errors.email ? "border-red-500" : "border-slate-400"
  }`}
@@ -115,7 +115,7 @@ const RegisterForm = () => {
                 },
               })}
               type="password"
-              className={`dark:placeholder:text-gray-600
+              className={`dark:placeholder:text-gray-600 dark:text-black
  dark:bg-slate-300 border rounded px-4 py-2 mt-1 w-full outline-none ${
    errors.password ? "border-red-500" : "border-slate-400"
  }`}
