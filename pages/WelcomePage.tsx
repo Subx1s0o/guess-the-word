@@ -46,7 +46,7 @@ export default function WelcomePage() {
           think! Join "Guess the Word" and explore new word horizons. Test your
           linguistic skills by deciphering hidden words.
         </p>
-        <div className="flex justify-center">
+        <div className="flex justify-center xl:justify-start">
           <button
             onClick={() => openModal("register")}
             className="px-6 py-2 font-medium bg-black text-white rounded-lg hover:bg-gray-800 dark:bg-white dark:text-black"

@@ -39,6 +39,7 @@ const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
       <IconButton
         aria-controls={open ? "theme-menu" : undefined}
         aria-haspopup="true"
+        aria-label="Open theme menu"
         onClick={handleClick}
         color="inherit"
       >
@@ -49,6 +50,7 @@ const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        aria-labelledby="theme-menu-button"
       >
         <MenuItem onClick={() => handleThemeChange("light")}>
           <ListItemIcon>

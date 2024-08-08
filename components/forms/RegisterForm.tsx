@@ -6,10 +6,10 @@ import { CircularProgress } from "@mui/material";
 import validator from "email-validator";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { IRegister } from "./interfaces";
-
+import { IRegister } from "../../types/types";
 const RegisterForm = () => {
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -18,10 +18,8 @@ const RegisterForm = () => {
 
   const onSubmit = async (data: IRegister): Promise<void> => {
     console.log(data);
-    // Імітація затримки для демонстрації
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    // Тут можна додати код для відправки даних на сервер
   };
+
   const goToLogin = () => {
     router.push("?mode=login");
   };

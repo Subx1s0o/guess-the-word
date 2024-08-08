@@ -2,7 +2,6 @@
 
 import CrossIcon from "@mui/icons-material/Close";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect } from "react";
 import LoginForm from "./forms/LoginForm";
 import RegisterForm from "./forms/RegisterForm";
 const backdropVariants = {
@@ -23,13 +22,6 @@ interface ModalProps {
 }
 
 export default function AuthModal({ isOpen, onClose, mode }: ModalProps) {
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen]);
-
   return (
     <AnimatePresence>
       {isOpen && (

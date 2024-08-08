@@ -18,8 +18,6 @@ const RegisterForm = () => {
 
   const onSubmit = async (data: ILogin): Promise<void> => {
     console.log(data);
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
   };
   const goToRegister = () => {
     router.push("?mode=register");
@@ -105,10 +103,10 @@ const RegisterForm = () => {
             {isSubmitting ? (
               <span className="flex gap-2 items-center">
                 <CircularProgress color="inherit" size={15} />
-                Registering...
+                Loginning...
               </span>
             ) : (
-              <span>Sign-Up</span>
+              <span>Sign-In</span>
             )}
           </button>
         </div>
