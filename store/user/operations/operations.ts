@@ -1,4 +1,5 @@
 import authService from "@/services/auth/auth.service";
+import userService from "@/services/user/user.service";
 import { ILogin, IRegister, IUser } from "@/types/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -29,3 +30,16 @@ export const login = createAsyncThunk<IUser, ILogin>(
 export const logout = createAsyncThunk("auth/logout", () => {
   authService.logout();
 });
+
+export const checkAuth = createAsyncThunk<IUser>(
+  "auth/check-auth",
+  async (_, thunkApi) => {
+    try {
+      const response = await userService.getCurrentUser();
+      return response;
+    } catch (error) {
+      await thunkApi.dispatch(logout());
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);

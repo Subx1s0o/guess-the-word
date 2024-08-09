@@ -31,7 +31,7 @@ class AuthService {
     }
   }
 
-  async getNewAccessToken(): Promise<void> {
+  async getNewAccessToken(): Promise<Pick<ITokens, "accessToken">> {
     const refreshToken = Cookies.get("refreshToken");
 
     if (!refreshToken) {
@@ -45,11 +45,14 @@ class AuthService {
         });
 
       AuthHelpers.setAccessToken(response.data.accessToken);
-    } catch (error: unknown) {
+
+      return response.data;
+    } catch (error: any) {
       if (error instanceof Error) {
         console.error("Error refreshing access token:", error.message);
+        throw error;
       } else {
-        console.error("An unexpected error occurred:", error);
+        throw new Error("Unexpected error: ", error);
       }
     }
   }

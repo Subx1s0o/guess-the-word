@@ -1,15 +1,10 @@
-import Footer from "@/components/elements/Footer";
-import Header from "@/components/elements/Header";
-import { ThemeProvider } from "next-themes";
-
+import CheckAuth from "@/components/checkers/CheckAuth";
 export default function Main() {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light">
-      <Header />
-      <section className="flex-1 flex">
-        <div className="my-container"></div>
-      </section>
-      <Footer />
-    </ThemeProvider>
+    <section className="flex-1 flex">
+      <div className="my-container">
+        <CheckAuth />
+      </div>
+    </section>
   );
 }

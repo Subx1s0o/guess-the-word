@@ -1,21 +1,24 @@
 import { IUser } from "@/types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { login, logout, register } from "./operations/operations";
+import { checkAuth, login, logout, register } from "./operations/operations";
 
 interface UserState {
   user: IUser | null;
   error: string | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 const initialState: UserState = {
   user: null,
   error: null,
   isAuthenticated: false,
+  isLoading: false,
 };
 
 const handlePending = (state: UserState) => {
   state.error = null;
+  state.isLoading = true;
 };
 
 const handleRejected = (state: UserState, action: PayloadAction<any>) => {
@@ -27,6 +30,7 @@ const handleRejected = (state: UserState, action: PayloadAction<any>) => {
     state.error = "An error occurred";
   }
   state.isAuthenticated = false;
+  state.isLoading = false;
 };
 
 const UserReducer = createSlice({
@@ -41,6 +45,7 @@ const UserReducer = createSlice({
         state.error = null;
         state.user = action.payload;
         state.isAuthenticated = true;
+        state.isLoading = false;
       })
       .addCase(login.pending, handlePending)
       .addCase(login.rejected, handleRejected)
@@ -52,6 +57,23 @@ const UserReducer = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.isAuthenticated = false;
+      })
+      .addCase(checkAuth.pending, handlePending)
+      .addCase(checkAuth.rejected, (state, action: PayloadAction<any>) => {
+        state.user = null;
+        state.isLoading = false;
+        if (typeof action.payload === "string") {
+          state.error = action.payload;
+        } else if (action.payload && action.payload.message) {
+          state.error = action.payload.message;
+        } else {
+          state.error = "An error occurred";
+        }
+      })
+      .addCase(checkAuth.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.error = null;
       });
   },
 });

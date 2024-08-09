@@ -1,9 +1,7 @@
-"use client";
 import Link from "next/link";
-export default function Home({ user }) {
+export default function Home() {
   return (
     <div className="my-container">
-      <p>{user && user.username}</p>
       <Link href="/profile">profile</Link>
     </div>
   );
