@@ -53,6 +53,7 @@ const UserReducer = createSlice({
         state.error = null;
         state.user = action.payload;
         state.isAuthenticated = true;
+        state.isLoading = false;
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;

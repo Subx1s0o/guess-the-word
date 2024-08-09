@@ -19,7 +19,7 @@ export default function UserHeader({ user }: UserHeaderProps) {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const {logout} = useActions()
+  const { logout } = useActions();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -29,8 +29,9 @@ export default function UserHeader({ user }: UserHeaderProps) {
   };
 
   const handleLogout = () => {
-    logout()
-  }
+    logout();
+    router.replace("/");
+  };
 
   return (
     <header>
