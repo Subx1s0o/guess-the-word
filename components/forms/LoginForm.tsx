@@ -10,7 +10,7 @@ import validator from "email-validator";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-const RegisterForm = () => {
+const LoginForm = () => {
   const router = useRouter();
   const {
     register,
@@ -130,4 +130,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

@@ -16,23 +16,27 @@ export default function WelcomePage() {
   const router = useRouter();
 
   useEffect(() => {
-    const mode = searchParams?.get("mode");
-    if (mode === "register" || mode === "login") {
-      setModalMode(mode);
-    } else {
-      setModalMode("register");
+    if (searchParams) {
+      const mode = searchParams.get("mode");
+      if (mode === "register" || mode === "login") {
+        setModalMode(mode);
+        setIsModalOpen(true);
+      } else {
+        setModalMode("register");
+        setIsModalOpen(false);
+      }
     }
   }, [searchParams]);
 
   const openModal = (mode: "login" | "register") => {
     setModalMode(mode);
     setIsModalOpen(true);
-    router.push(`?mode=${mode}`);
+    router.replace(`?mode=${mode}`);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    router.push("/");
+    router.replace("/");
   };
 
   return (
@@ -48,8 +52,8 @@ export default function WelcomePage() {
         </p>
         <div className="flex justify-center xl:justify-start">
           <button
-            onClick={() => openModal("register")}
             className="px-6 py-2 font-medium bg-black text-white rounded-lg hover:bg-gray-800 dark:bg-white dark:text-black"
+            onClick={() => openModal("register")}
           >
             Get Started
           </button>
