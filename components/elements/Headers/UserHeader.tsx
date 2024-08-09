@@ -1,5 +1,6 @@
 "use client";
 
+import { useActions } from "@/hooks/useActions";
 import CoinIcon from "@/public/icons/coin.svg";
 import { Avatar, ListItemText, Menu, MenuItem } from "@mui/material";
 import Link from "next/link";
@@ -18,7 +19,7 @@ export default function UserHeader({ user }: UserHeaderProps) {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-
+  const {logout} = useActions()
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -26,6 +27,10 @@ export default function UserHeader({ user }: UserHeaderProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    logout()
+  }
 
   return (
     <header>
@@ -63,9 +68,9 @@ export default function UserHeader({ user }: UserHeaderProps) {
               <MenuItem onClick={() => router.push("/profile")}>
                 <ListItemText primary="Profile" />
               </MenuItem>
-              {/* <MenuItem onClick={handleLogout}>
+              <MenuItem onClick={handleLogout}>
                 <ListItemText primary="Logout" />
-              </MenuItem> */}
+              </MenuItem>
             </Menu>
           </div>
         </div>

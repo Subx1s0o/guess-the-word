@@ -1,5 +1,7 @@
 "use client";
 
+import { useActions } from "@/hooks/useActions";
+import { useAuth } from "@/hooks/useAuth";
 import { ILogin } from "@/types/types";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -13,11 +15,14 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<ILogin>();
 
+  const { login } = useActions();
+  const { isLoading } = useAuth();
+
   const onSubmit = async (data: ILogin): Promise<void> => {
-    console.log(data);
+    login(data);
   };
   const goToRegister = () => {
     router.push("?mode=register");
@@ -98,9 +103,9 @@ const RegisterForm = () => {
           <button
             type="submit"
             className="px-4 py-2 disabled:cursor-not-allowed dark:bg-white dark:text-black dark:font-semibold bg-black text-white font-medium rounded-lg disabled:bg-gray-900"
-            disabled={isSubmitting}
+            disabled={isLoading}
           >
-            {isSubmitting ? (
+            {isLoading ? (
               <span className="flex gap-2 items-center">
                 <CircularProgress color="inherit" size={15} />
                 Loginning...

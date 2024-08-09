@@ -1,10 +1,9 @@
-
+import ProtectedRoute from "@/components/checkers/ProtectedRoute";
 
 export default function page() {
   return (
-    <div>
-      profile
-  
-    </div>
+    <ProtectedRoute Component={{ isNeededAuth: true }}>
+      <div>profile</div>
+    </ProtectedRoute>
   );
 }

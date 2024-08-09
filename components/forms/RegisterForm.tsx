@@ -1,5 +1,7 @@
 "use client";
 
+import { useActions } from "@/hooks/useActions";
+import { useAuth } from "@/hooks/useAuth";
 import { IRegister } from "@/types/types";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -9,15 +11,17 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 const RegisterForm = () => {
   const router = useRouter();
+  const { register } = useActions();
+  const { isLoading } = useAuth();
 
   const {
-    register,
+    register: formAuth,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<IRegister>();
 
-  const onSubmit = async (data: IRegister): Promise<void> => {
-    console.log(data);
+  const onSubmit = async (data: IRegister) => {
+    register(data);
   };
 
   const goToLogin = () => {
@@ -52,7 +56,7 @@ const RegisterForm = () => {
             Username:
             <input
               placeholder="Username"
-              {...register("username", {
+              {...formAuth("username", {
                 required: "Username is required",
                 minLength: {
                   value: 3,
@@ -82,7 +86,7 @@ const RegisterForm = () => {
             <input
               type="email"
               placeholder="Email"
-              {...register("email", {
+              {...formAuth("email", {
                 required: "Email is required",
                 validate: (value) =>
                   validator.validate(value) || "Invalid email address",
@@ -105,7 +109,7 @@ const RegisterForm = () => {
             Password:
             <input
               placeholder="Password"
-              {...register("password", {
+              {...formAuth("password", {
                 required: "Password is required",
                 minLength: {
                   value: 6,
@@ -130,9 +134,9 @@ const RegisterForm = () => {
           <button
             type="submit"
             className="px-4 py-2 disabled:cursor-not-allowed dark:bg-white dark:text-black dark:font-semibold bg-black text-white font-medium rounded-lg disabled:bg-gray-900"
-            disabled={isSubmitting}
+            disabled={isLoading}
           >
-            {isSubmitting ? (
+            {isLoading ? (
               <span className="flex gap-2 items-center">
                 <CircularProgress color="inherit" size={15} />
                 Registering...
