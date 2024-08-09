@@ -26,11 +26,11 @@ jobs:
           npm run build
           npm run export
 
+      - name: Check if 'out' directory exists
+        run: if [ ! -d "out" ]; then echo "Directory 'out' does not exist"; exit 1; fi
+
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
-
-      - name: Check directory contents
-        run: ls -la out
 
       - name: Deploy to Firebase
         env:

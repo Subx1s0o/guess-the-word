@@ -1,12 +1,12 @@
 "use client";
 
+import { ILogin } from "@/types/types";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 import { CircularProgress } from "@mui/material";
 import validator from "email-validator";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { ILogin } from "./interfaces";
 
 const RegisterForm = () => {
   const router = useRouter();
