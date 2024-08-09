@@ -1,9 +1,7 @@
-import Footer from "@/components/elements/Footer";
-import Header from "@/components/elements/Header";
 import "modern-normalize/modern-normalize.css";
-import { ThemeProvider } from "next-themes";
 import "resetcss/reset.min.css";
 import "../styles/globals.css";
+import ClientSide from "./client-side";
 
 export const metadata = {
   title: "Guess The Word",
@@ -19,11 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="flex flex-col min-h-screen dark:bg-black text-black dark:text-white">
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <Header />
-          <main className="flex-1 flex flex-col">{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <main className="flex-1 flex flex-col">
+          <ClientSide>{children}</ClientSide>
+        </main>
       </body>
     </html>
   );

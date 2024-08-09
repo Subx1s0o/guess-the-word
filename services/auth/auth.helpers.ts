@@ -1,4 +1,4 @@
-import { IAuthResponse, ITokens } from "@/types/types";
+import { ITokens } from "@/types/types";
 import Cookies from "js-cookie";
 
 class AuthHelpers {
@@ -22,12 +22,6 @@ class AuthHelpers {
   static removeFromStorage(): void {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
-    localStorage.removeItem("user");
-  }
-
-  static saveResponseToStorage(data: IAuthResponse): void {
-    this.saveTokensStorage(data);
-    localStorage.setItem("user", JSON.stringify(data.user));
   }
 }
 

@@ -1,4 +1,10 @@
-import { IAuthResponse, ILogin, IRegister, ITokens } from "@/types/types";
+import {
+  IAuthResponse,
+  ILogin,
+  IRegister,
+  ITokens,
+  IUser,
+} from "@/types/types";
 import axios, { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import AuthHelpers from "./auth.helpers";
@@ -9,14 +15,17 @@ class AuthService {
   async main(
     type: "login" | "register",
     data: ILogin | IRegister
-  ): Promise<IAuthResponse> {
+  ): Promise<IUser> {
     try {
       const res: AxiosResponse<IAuthResponse> = await axios.post<IAuthResponse>(
         `${url}/auth/${type}`,
         data
       );
-      await AuthHelpers.saveResponseToStorage(res.data);
-      return res.data;
+      await AuthHelpers.saveTokensStorage({
+        accessToken: res.data.accessToken,
+        refreshToken: res.data.refreshToken,
+      });
+      return res.data.user;
     } catch (error) {
       throw error;
     }
@@ -43,6 +52,10 @@ class AuthService {
         console.error("An unexpected error occurred:", error);
       }
     }
+  }
+
+  logout(): void {
+    AuthHelpers.removeFromStorage();
   }
 }
 
