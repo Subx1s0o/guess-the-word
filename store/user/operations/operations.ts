@@ -10,7 +10,9 @@ export const register = createAsyncThunk<IUser, IRegister>(
       const response = await authService.main("register", data);
       return response;
     } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message || "Registration failed");
+      return thunkApi.rejectWithValue(
+        error.response?.data || { message: "Registration failed" }
+      );
     }
   }
 );
@@ -22,7 +24,9 @@ export const login = createAsyncThunk<IUser, ILogin>(
       const response = await authService.main("login", data);
       return response;
     } catch (error: any) {
-      return thunkApi.rejectWithValue(error.message || "Login failed");
+      return thunkApi.rejectWithValue(
+        error.response?.data || { message: "Login failed" }
+      );
     }
   }
 );
@@ -37,9 +41,11 @@ export const checkAuth = createAsyncThunk<IUser>(
     try {
       const response = await userService.getCurrentUser();
       return response;
-    } catch (error) {
+    } catch (error: any) {
       await thunkApi.dispatch(logout());
-      return thunkApi.rejectWithValue(error);
+      return thunkApi.rejectWithValue(
+        error.response?.data || { message: "Check USer failed" }
+      );
     }
   }
 );

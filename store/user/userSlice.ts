@@ -2,6 +2,7 @@ import { IUser } from "@/types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { checkAuth, login, logout, register } from "./operations/operations";
 
+import { toast } from "react-toastify";
 interface UserState {
   user: IUser | null;
   error: string | null;
@@ -24,10 +25,13 @@ const handlePending = (state: UserState) => {
 const handleRejected = (state: UserState, action: PayloadAction<any>) => {
   if (typeof action.payload === "string") {
     state.error = action.payload;
+    toast.error(action.payload);
   } else if (action.payload && action.payload.message) {
     state.error = action.payload.message;
+    toast.error(action.payload.message);
   } else {
     state.error = "An error occurred";
+    toast.error("An error occurred");
   }
   state.isAuthenticated = false;
   state.isLoading = false;

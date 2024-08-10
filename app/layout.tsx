@@ -3,9 +3,10 @@ import Footer from "@/components/elements/Footer";
 import "@/styles/globals.css";
 import "modern-normalize/modern-normalize.css";
 import { Metadata } from "next";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "resetcss/reset.min.css";
 import ClientProviders from "./ClientProviders";
-
 export const metadata: Metadata = {
   title: "Guess The Word - Fun Word-Guessing Game for All Ages",
   description:
@@ -49,7 +50,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="flex flex-col min-h-screen dark:bg-black text-black dark:text-white">
         <ClientProviders>
+          <ToastContainer />
           <CheckAuthHeader />
+
           <main className="flex-1 flex flex-col">{children}</main>
           <Footer />
         </ClientProviders>
