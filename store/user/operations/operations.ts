@@ -44,7 +44,7 @@ export const checkAuth = createAsyncThunk<IUser>(
     } catch (error: any) {
       await thunkApi.dispatch(logout());
       return thunkApi.rejectWithValue(
-        error.response?.data || { message: "Check USer failed" }
+        error.response?.data || { message: "Check User failed" }
       );
     }
   }
