@@ -1,9 +1,12 @@
+// components/AuthModal.tsx
 "use client";
 
+import { useModalStore } from "@/hooks/useModalStore";
 import CrossIcon from "@mui/icons-material/Close";
 import { AnimatePresence, motion } from "framer-motion";
 import LoginForm from "./forms/LoginForm";
 import RegisterForm from "./forms/RegisterForm";
+
 const backdropVariants = {
   visible: { opacity: 1 },
   hidden: { opacity: 0 },
@@ -15,18 +18,14 @@ const modalVariants = {
   exit: { opacity: 0, transition: { duration: 0.3 } },
 };
 
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  mode: "login" | "register";
-}
+export default function AuthModal() {
+  const { isOpen, mode, closeModal, switchMode } = useModalStore();
 
-export default function AuthModal({ isOpen, onClose, mode }: ModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0  z-50 bg-black bg-opacity-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
           variants={backdropVariants}
           initial="hidden"
           animate="visible"
@@ -41,11 +40,15 @@ export default function AuthModal({ isOpen, onClose, mode }: ModalProps) {
           >
             <button
               className="absolute top-4 right-4 text-xl font-bold"
-              onClick={onClose}
+              onClick={closeModal}
             >
               <CrossIcon />
             </button>
-            {mode === "login" ? <LoginForm /> : <RegisterForm />}
+            {mode === "login" ? (
+              <LoginForm switchMode={switchMode} />
+            ) : (
+              <RegisterForm switchMode={switchMode} />
+            )}
           </motion.div>
         </motion.div>
       )}

@@ -2,17 +2,22 @@
 
 import { useActions } from "@/hooks/useActions";
 import { useAuth } from "@/hooks/useAuth";
+import { useModalStore } from "@/hooks/useModalStore";
 import { IRegister } from "@/types/types";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 import { CircularProgress } from "@mui/material";
 import validator from "email-validator";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-const RegisterForm = () => {
-  const router = useRouter();
+
+interface RegisterFormProps {
+  switchMode: () => void;
+}
+
+const RegisterForm = ({ switchMode }: RegisterFormProps) => {
   const { register } = useActions();
   const { isLoading } = useAuth();
+  const { closeModal } = useModalStore();
 
   const {
     register: formAuth,
@@ -21,11 +26,8 @@ const RegisterForm = () => {
   } = useForm<IRegister>();
 
   const onSubmit = async (data: IRegister) => {
-    register(data);
-  };
-
-  const goToLogin = () => {
-    router.push("?mode=login");
+    await register(data);
+    closeModal();
   };
 
   return (
@@ -35,14 +37,14 @@ const RegisterForm = () => {
       </h2>
       <div className="flex justify-center gap-4 mb-4">
         <button
-          type="submit"
+          type="button"
           className="flex items-center gap-1 shadow-button border text-center px-4 py-2 bg-white text-black font-medium rounded-lg"
         >
           <GoogleIcon />
           <span>Google</span>
         </button>
         <button
-          type="submit"
+          type="button"
           className="flex items-center gap-1 text-center px-4 py-2 bg-black text-white font-medium rounded-lg"
         >
           <GitHubIcon />
@@ -91,10 +93,9 @@ const RegisterForm = () => {
                 validate: (value) =>
                   validator.validate(value) || "Invalid email address",
               })}
-              className={`dark:placeholder:text-gray-600 dark:text-black
- dark:bg-slate-300 border rounded px-4 py-2 mt-1 w-full outline-none ${
-   errors.email ? "border-red-500" : "border-slate-400"
- }`}
+              className={`dark:placeholder:text-gray-600 dark:text-black dark:bg-slate-300 border rounded px-4 py-2 mt-1 w-full outline-none ${
+                errors.email ? "border-red-500" : "border-slate-400"
+              }`}
             />
           </label>
           {errors.email && (
@@ -117,10 +118,9 @@ const RegisterForm = () => {
                 },
               })}
               type="password"
-              className={`dark:placeholder:text-gray-600 dark:text-black
- dark:bg-slate-300 border rounded px-4 py-2 mt-1 w-full outline-none ${
-   errors.password ? "border-red-500" : "border-slate-400"
- }`}
+              className={`dark:placeholder:text-gray-600 dark:text-black dark:bg-slate-300 border rounded px-4 py-2 mt-1 w-full outline-none ${
+                errors.password ? "border-red-500" : "border-slate-400"
+              }`}
             />
           </label>
           {errors.password && (
@@ -142,7 +142,7 @@ const RegisterForm = () => {
                 Registering...
               </span>
             ) : (
-              <span>Sign-Up</span>
+              <span>Sign Up</span>
             )}
           </button>
         </div>
@@ -150,11 +150,11 @@ const RegisterForm = () => {
 
       <div className="flex justify-center">
         <button
-          onClick={goToLogin}
+          onClick={switchMode}
           className="px-4 py-2 text-black dark:text-white"
         >
-          Already have an account?{"  "}
-          <span className="underline font-medium">Sign-In</span>
+          Already have an account?{" "}
+          <span className="underline font-medium">Sign In</span>
         </button>
       </div>
     </div>

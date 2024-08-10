@@ -2,30 +2,32 @@
 
 import { useActions } from "@/hooks/useActions";
 import { useAuth } from "@/hooks/useAuth";
+import { useModalStore } from "@/hooks/useModalStore";
 import { ILogin } from "@/types/types";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 import { CircularProgress } from "@mui/material";
 import validator from "email-validator";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-const LoginForm = () => {
-  const router = useRouter();
+interface LoginFormProps {
+  switchMode: () => void;
+}
+
+const LoginForm = ({ switchMode }: LoginFormProps) => {
+  const { login } = useActions();
+  const { isLoading } = useAuth();
+  const { closeModal } = useModalStore();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ILogin>();
 
-  const { login } = useActions();
-  const { isLoading } = useAuth();
-
-  const onSubmit = async (data: ILogin): Promise<void> => {
-    login(data);
-  };
-  const goToRegister = () => {
-    router.push("?mode=register");
+  const onSubmit = async (data: ILogin) => {
+    await login(data);
+    closeModal();
   };
 
   return (
@@ -33,14 +35,14 @@ const LoginForm = () => {
       <h2 className="text-2xl text-center font-semibold mb-6">Welcome</h2>
       <div className="flex justify-center gap-4 mb-4">
         <button
-          type="submit"
+          type="button"
           className="flex items-center gap-1 shadow-button border text-center px-4 py-2 bg-white text-black font-medium rounded-lg"
         >
           <GoogleIcon />
           <span>Google</span>
         </button>
         <button
-          type="submit"
+          type="button"
           className="flex items-center gap-1 text-center px-4 py-2 bg-black text-white font-medium rounded-lg"
         >
           <GitHubIcon />
@@ -60,10 +62,9 @@ const LoginForm = () => {
                 validate: (value) =>
                   validator.validate(value) || "Invalid email address",
               })}
-              className={`dark:placeholder:text-gray-600
- dark:bg-slate-300 border rounded px-4 py-2 mt-1 w-full outline-none ${
-   errors.email ? "border-red-500" : "border-slate-400"
- }`}
+              className={`dark:placeholder:text-gray-600 dark:bg-slate-300 border rounded px-4 py-2 mt-1 w-full outline-none ${
+                errors.email ? "border-red-500" : "border-slate-400"
+              }`}
             />
           </label>
           {errors.email && (
@@ -86,10 +87,9 @@ const LoginForm = () => {
                 },
               })}
               type="password"
-              className={`dark:placeholder:text-gray-600
- dark:bg-slate-300 border rounded px-4 py-2 mt-1 w-full outline-none ${
-   errors.password ? "border-red-500" : "border-slate-400"
- }`}
+              className={`dark:placeholder:text-gray-600 dark:bg-slate-300 border rounded px-4 py-2 mt-1 w-full outline-none ${
+                errors.password ? "border-red-500" : "border-slate-400"
+              }`}
             />
           </label>
           {errors.password && (
@@ -108,10 +108,10 @@ const LoginForm = () => {
             {isLoading ? (
               <span className="flex gap-2 items-center">
                 <CircularProgress color="inherit" size={15} />
-                Loginning...
+                Logging in...
               </span>
             ) : (
-              <span>Sign-In</span>
+              <span>Sign In</span>
             )}
           </button>
         </div>
@@ -119,11 +119,11 @@ const LoginForm = () => {
 
       <div className="flex justify-center">
         <button
-          onClick={goToRegister}
+          onClick={switchMode}
           className="px-4 py-2 text-black dark:text-white"
         >
-          Don`t have an account?{"  "}
-          <span className="underline font-medium">Sign-Up</span>
+          Don’t have an account?{" "}
+          <span className="underline font-medium">Sign Up</span>
         </button>
       </div>
     </div>

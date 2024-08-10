@@ -2,42 +2,14 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useModalStore } from "@/hooks/useModalStore";
 
 const AuthModal = dynamic(() => import("@/components/AuthModal"), {
   ssr: false,
 });
 
 export default function WelcomePage() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modalMode, setModalMode] = useState<"login" | "register">("register");
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (searchParams) {
-      const mode = searchParams.get("mode");
-      if (mode === "register" || mode === "login") {
-        setModalMode(mode);
-        setIsModalOpen(true);
-      } else {
-        setModalMode("register");
-        setIsModalOpen(false);
-      }
-    }
-  }, [searchParams]);
-
-  const openModal = (mode: "login" | "register") => {
-    setModalMode(mode);
-    setIsModalOpen(true);
-    router.replace(`?mode=${mode}`);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    router.replace("/");
-  };
+  const { openModal } = useModalStore();
 
   return (
     <div className="flex flex-col xl:grid grid-cols-2 gap-4 min-h-full justify-center">
@@ -58,13 +30,7 @@ export default function WelcomePage() {
             Get Started
           </button>
         </div>
-        <Suspense fallback={null}>
-          <AuthModal
-            isOpen={isModalOpen}
-            onClose={closeModal}
-            mode={modalMode}
-          />
-        </Suspense>
+        <AuthModal />
       </div>
       <div className="flex items-center justify-center">
         <div>MODEl</div>
