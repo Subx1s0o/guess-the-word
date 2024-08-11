@@ -1,6 +1,11 @@
 import { IUser } from "@/types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { checkAuth, login, logout, register } from "./operations/operations";
+import {
+  getCurrentUser,
+  login,
+  logout,
+  register,
+} from "./operations/operations";
 
 import { toast } from "react-toastify";
 interface UserState {
@@ -63,8 +68,8 @@ const UserReducer = createSlice({
         state.user = null;
         state.isAuthenticated = false;
       })
-      .addCase(checkAuth.pending, handlePending)
-      .addCase(checkAuth.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(getCurrentUser.pending, handlePending)
+      .addCase(getCurrentUser.rejected, (state, action: PayloadAction<any>) => {
         state.user = null;
         state.isLoading = false;
         if (typeof action.payload === "string") {
@@ -75,7 +80,7 @@ const UserReducer = createSlice({
           state.error = "An error occurred";
         }
       })
-      .addCase(checkAuth.fulfilled, (state, action) => {
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoading = false;
         state.error = null;

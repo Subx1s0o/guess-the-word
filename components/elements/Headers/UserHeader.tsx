@@ -49,14 +49,15 @@ export default function UserHeader({ user }: UserHeaderProps) {
           <div>
             {user.photo ? (
               <Avatar
+                variant="rounded"
                 alt={user.username || "User"}
                 src={user.photo}
                 className="w-10 h-10 sm:w-12 sm:h-12"
                 onClick={handleClick}
               />
             ) : (
-              <Avatar onClick={handleClick}>
-                {user.username ? user.username.slice(0, 1) : "?"}
+              <Avatar variant="rounded" onClick={handleClick}>
+                {user.username.slice(0, 1)}
               </Avatar>
             )}
             <Menu

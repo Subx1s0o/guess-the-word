@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build ",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -14,6 +14,7 @@
     "@mui/icons-material": "^5.16.6",
     "@mui/material": "^5.16.6",
     "@reduxjs/toolkit": "^2.2.7",
+    "@tanstack/react-query": "^5.51.23",
     "@types/axios": "^0.14.0",
     "axios": "^1.7.3",
     "email-validator": "^2.0.4",

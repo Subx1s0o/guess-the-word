@@ -1,11 +1,18 @@
 import dynamic from "next/dynamic";
 
-const TopUsersTable = dynamic(() => import("@/components/user/TopUsersTable"));
-
+const TopUsersTable = dynamic(
+  () => import("@/components/elements/TopUsersTable")
+);
 export default function Home() {
   return (
-    <div className="my-container">
-      <TopUsersTable />
-    </div>
+    <>
+      <section>
+        <div className="my-container">
+          <h1 className="text-4xl text-center font-semibold">Top Users</h1>
+          <TopUsersTable />
+          Hi
+        </div>
+      </section>
+    </>
   );
 }

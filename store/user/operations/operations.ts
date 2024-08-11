@@ -35,8 +35,8 @@ export const logout = createAsyncThunk("auth/logout", () => {
   authService.logout();
 });
 
-export const checkAuth = createAsyncThunk<IUser>(
-  "auth/check-auth",
+export const getCurrentUser = createAsyncThunk<IUser>(
+  "user/getCurrentUser",
   async (_, thunkApi) => {
     try {
       const response = await userService.getCurrentUser();
