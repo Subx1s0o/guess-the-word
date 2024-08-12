@@ -1,8 +1,10 @@
+"use client"
+
 import dynamic from "next/dynamic";
 
-const TopUsersTable = dynamic(
-  () => import("@/components/elements/TopUsersTable")
-);
+const TopUsersTable = dynamic(() => import('@/components/elements/TopUsersTable'), {
+  ssr: false,
+});
 export default function Home() {
   return (
     <>

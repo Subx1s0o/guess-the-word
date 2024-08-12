@@ -1,4 +1,3 @@
-
 import { Metadata } from "next";
 import ClientProviders from "../ClientProviders";
 

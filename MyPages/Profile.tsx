@@ -1,9 +1,11 @@
+"use client";
+
 import { useActions } from "@/hooks/useActions";
 import { useAuth } from "@/hooks/useAuth";
 import { Avatar } from "@mui/material";
 import React, { useCallback, useEffect } from "react";
 
-const UserUpdater: React.FC = () => {
+const Profile: React.FC = () => {
   const { user, isLoading, error } = useAuth();
   const { getCurrentUser } = useActions();
 
@@ -52,4 +54,4 @@ const UserUpdater: React.FC = () => {
   );
 };
 
-export default UserUpdater;
+export default Profile;
