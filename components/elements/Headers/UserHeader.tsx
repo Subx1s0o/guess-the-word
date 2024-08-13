@@ -1,5 +1,6 @@
 "use client";
 
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { useActions } from "@/hooks/useActions";
 import CoinIcon from "@/public/icons/coin.svg";
 import { Avatar, ListItemText, Menu, MenuItem } from "@mui/material";
@@ -20,6 +21,7 @@ export default function UserHeader({ user }: UserHeaderProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { logout } = useActions();
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -61,17 +63,26 @@ export default function UserHeader({ user }: UserHeaderProps) {
               </Avatar>
             )}
             <Menu
-              id="theme-menu"
+              id="user-menu"
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
-              aria-labelledby="theme-menu-button"
+              aria-labelledby="user-menu-button"
             >
-              <MenuItem onClick={() => router.push("/profile")}>
+              <MenuItem
+         
+                onClick={() => router.push("/profile")}
+              >
                 <ListItemText primary="Profile" />
+              </MenuItem>
+              <MenuItem onClick={() => router.push("/profile")}>
+                <ListItemText primary="Settings" />
               </MenuItem>
               <MenuItem onClick={handleLogout}>
                 <ListItemText primary="Logout" />
+              </MenuItem>
+              <MenuItem>
+                <ThemeSwitcher />
               </MenuItem>
             </Menu>
           </div>

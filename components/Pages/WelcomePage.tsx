@@ -14,7 +14,7 @@ export default function WelcomePage() {
   return (
     <section className="flex-1 flex">
       <div className="my-container">
-        <div className="flex flex-col xl:grid grid-cols-2 gap-4 min-h-full justify-center">
+        <div className="flex flex-col xl:grid grid-cols-2 gap-4 min-h-full justify-center ">
           <div className="justify-center flex flex-col">
             <h1 className="xl:text-start text-center text-4xl xl:text-6xl font-bold mb-4 xl:mb-8">
               Guess the Word: Enjoy the Thrill of Discovery!

@@ -4,8 +4,8 @@
 import { useModalStore } from "@/hooks/useModalStore";
 import CrossIcon from "@mui/icons-material/Close";
 import { AnimatePresence, motion } from "framer-motion";
-import LoginForm from "./forms/LoginForm";
-import RegisterForm from "./forms/RegisterForm";
+import LoginForm from "./elements/forms/LoginForm";
+import RegisterForm from "./elements/forms/RegisterForm";
 
 const backdropVariants = {
   visible: { opacity: 1 },

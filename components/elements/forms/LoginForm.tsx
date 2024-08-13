@@ -4,11 +4,11 @@ import { useActions } from "@/hooks/useActions";
 import { useAuth } from "@/hooks/useAuth";
 import { useModalStore } from "@/hooks/useModalStore";
 import { ILogin } from "@/types/types";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
+
 import { CircularProgress } from "@mui/material";
 import validator from "email-validator";
 import { useForm } from "react-hook-form";
+import AuthButtons from "../buttons/AuthButtons";
 
 interface LoginFormProps {
   switchMode: () => void;
@@ -33,22 +33,7 @@ const LoginForm = ({ switchMode }: LoginFormProps) => {
   return (
     <div>
       <h2 className="text-2xl text-center font-semibold mb-6">Welcome</h2>
-      <div className="flex justify-center gap-4 mb-4">
-        <button
-          type="button"
-          className="flex items-center gap-1 shadow-button border text-center px-4 py-2 bg-white text-black font-medium rounded-lg"
-        >
-          <GoogleIcon />
-          <span>Google</span>
-        </button>
-        <button
-          type="button"
-          className="flex items-center gap-1 text-center px-4 py-2 bg-black text-white font-medium rounded-lg"
-        >
-          <GitHubIcon />
-          <span>GitHub</span>
-        </button>
-      </div>
+      <AuthButtons />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">

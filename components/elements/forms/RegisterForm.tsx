@@ -1,15 +1,13 @@
 "use client";
 
-import { auth, googleProvider } from "@/firebase.config";
 import { useActions } from "@/hooks/useActions";
 import { useAuth } from "@/hooks/useAuth";
 import { useModalStore } from "@/hooks/useModalStore";
 import { IRegister } from "@/types/types";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
 import { CircularProgress } from "@mui/material";
 import validator from "email-validator";
-import { signInWithPopup } from "firebase/auth";
+import AuthButtons from "../buttons/AuthButtons";
+
 import { useForm } from "react-hook-form";
 
 interface RegisterFormProps {
@@ -32,38 +30,12 @@ const RegisterForm = ({ switchMode }: RegisterFormProps) => {
     closeModal();
   };
 
-  const signInWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      console.log(result);
-    } catch (error) {
-      console.error("Error during Facebook sign-in:", error);
-    }
-  };
-
   return (
     <div>
       <h2 className="text-2xl text-center font-semibold mb-6">
         Get Started Now
       </h2>
-      <div className="flex justify-center gap-4 mb-4">
-        <button
-          onClick={signInWithGoogle}
-          type="button"
-          className="flex items-center gap-1 shadow-button border text-center px-4 py-2 bg-white text-black font-medium rounded-lg"
-        >
-          <GoogleIcon />
-          <span>Google</span>
-        </button>
-        <button
-          type="button"
-          className="flex items-center gap-1 text-center px-4 py-2 bg-black text-white font-medium rounded-lg"
-        >
-          <GitHubIcon />
-          <span>GitHub</span>
-        </button>
-      </div>
-
+      <AuthButtons />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <label>
