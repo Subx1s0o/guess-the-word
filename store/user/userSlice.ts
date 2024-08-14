@@ -2,6 +2,8 @@ import { IUser } from "@/types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getCurrentUser,
+  googleAuth,
+  googleLogin,
   login,
   logout,
   register,
@@ -84,6 +86,22 @@ const UserReducer = createSlice({
         state.user = action.payload;
         state.isLoading = false;
         state.error = null;
+      })
+      .addCase(googleLogin.pending, handlePending)
+      .addCase(googleLogin.rejected, handleRejected)
+      .addCase(googleLogin.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.error = null;
+        state.isAuthenticated = true;
+      })
+      .addCase(googleAuth.pending, handlePending)
+      .addCase(googleAuth.rejected, handleRejected)
+      .addCase(googleAuth.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.error = null;
+        state.isAuthenticated = true;
       });
   },
 });

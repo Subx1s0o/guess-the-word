@@ -1,16 +1,19 @@
+"use client";
 import GlobalLoader from "@/components/Loaders/GlobalLoader";
 import { auth, githubProvider, googleProvider } from "@/firebase.config";
+import { useActions } from "@/hooks/useActions";
 import { useModalStore } from "@/hooks/useModalStore";
+
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function AuthButtons() {
   const router = useRouter();
+  const { googleAuth } = useActions();
   const [loading, setLoading] = useState<boolean>(false);
   const { closeModal } = useModalStore();
 
@@ -26,28 +29,25 @@ export default function AuthButtons() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google`,
           { accessToken: idToken }
         );
-        console.log(response.data);
+ 
 
         closeModal();
 
         if (response.data.needConfirmation) {
-          // Set the token in cookies
-          Cookies.set("auth-token", idToken, { expires: 1 });
+          // const queryParams = new URLSearchParams({
+          //   token: response.data.token,
+          // }).toString();
 
-          const queryParams = new URLSearchParams({
-            name: response.data.name,
-            photo: response.data.picture,
-          }).toString();
-
-          router.replace(`/confirm-account?${queryParams}`);
+          router.replace(`/confirm-account/${response.data.token}`);
+        } else {
+          await googleAuth(response.data);
         }
       } catch (error) {
         console.error("Error sending token to backend:", error);
       }
     } catch (error) {
-      console.error("Error during Google sign-in:", error);
-    } finally {
       setLoading(false);
+      console.error("Error during Google sign-in:", error);
     }
   };
 

@@ -1,5 +1,6 @@
 import {
   IAuthResponse,
+  IGoogle,
   ILogin,
   IRegister,
   ITokens,
@@ -26,8 +27,8 @@ class AuthService {
         refreshToken: res.data.refreshToken,
       });
       return res.data.user;
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      throw new Error(`Unexpected error: ${error.message || error}`);
     }
   }
 
@@ -48,17 +49,40 @@ class AuthService {
 
       return response.data;
     } catch (error: any) {
-      if (error instanceof Error) {
-        console.error("Error refreshing access token:", error.message);
-        throw error;
-      } else {
-        throw new Error("Unexpected error: ", error);
-      }
+      throw new Error(`Unexpected error: ${error.message || error}`);
     }
   }
 
   logout(): void {
     AuthHelpers.removeFromStorage();
+  }
+
+  async googleLogin(data: IGoogle): Promise<IUser> {
+    try {
+      const res: AxiosResponse<IAuthResponse> = await axios.post<IAuthResponse>(
+        `${url}/auth/google-login`,
+        data
+      );
+
+      await AuthHelpers.saveTokensStorage({
+        accessToken: res.data.accessToken,
+        refreshToken: res.data.refreshToken,
+      });
+      return res.data.user;
+    } catch (error: any) {
+      throw new Error(`Unexpected error: ${error.message || error}`);
+    }
+  }
+  async googleAuth(data: IAuthResponse): Promise<IUser> {
+    try {
+      await AuthHelpers.saveTokensStorage({
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
+      });
+      return data.user;
+    } catch (error: any) {
+      throw new Error(`Unexpected error: ${error.message || error}`);
+    }
   }
 }
 

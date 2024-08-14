@@ -28,3 +28,11 @@ export interface ILogin {
 export interface IRegister extends ILogin {
   username: string;
 }
+
+export interface IGoogle {
+  name: string;
+  uid: string;
+  email: string;
+  password: string;
+  picture: string;
+}

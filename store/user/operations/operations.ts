@@ -1,6 +1,12 @@
 import authService from "@/services/auth/auth.service";
 import userService from "@/services/user/user.service";
-import { ILogin, IRegister, IUser } from "@/types/types";
+import {
+  IAuthResponse,
+  IGoogle,
+  ILogin,
+  IRegister,
+  IUser,
+} from "@/types/types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const register = createAsyncThunk<IUser, IRegister>(
@@ -11,7 +17,7 @@ export const register = createAsyncThunk<IUser, IRegister>(
       return response;
     } catch (error: any) {
       return thunkApi.rejectWithValue(
-        error.response?.data || { message: "Registration failed" }
+        error.response?.data?.message || { message: "Registration failed" }
       );
     }
   }
@@ -25,7 +31,7 @@ export const login = createAsyncThunk<IUser, ILogin>(
       return response;
     } catch (error: any) {
       return thunkApi.rejectWithValue(
-        error.response?.data || { message: "Login failed" }
+        error.response?.data?.message || { message: "Login failed" }
       );
     }
   }
@@ -44,7 +50,35 @@ export const getCurrentUser = createAsyncThunk<IUser>(
     } catch (error: any) {
       await thunkApi.dispatch(logout());
       return thunkApi.rejectWithValue(
-        error.response?.data || { message: "Check User failed" }
+        error.response?.data.message || { message: "Check User failed" }
+      );
+    }
+  }
+);
+
+export const googleLogin = createAsyncThunk<IUser, IGoogle>(
+  "auth/google-login",
+  async (data, thunkApi) => {
+    try {
+      const response = await authService.googleLogin(data);
+      return response;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(
+        error.response?.data?.message || { message: "Google Auth Failed" }
+      );
+    }
+  }
+);
+
+export const googleAuth = createAsyncThunk<IUser, IAuthResponse>(
+  "auth/google-auth",
+  async (data, thunkApi) => {
+    try {
+      const response = await authService.googleAuth(data);
+      return response;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(
+        error.response?.data?.message || { message: "Google Auth Failed" }
       );
     }
   }
