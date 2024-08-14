@@ -1,9 +1,9 @@
 import CheckAuthHeader from "@/components/checkers/CheckAuthHeader";
 import Footer from "@/components/elements/Footer";
 import "@/styles/globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "modern-normalize/modern-normalize.css";
 import { Metadata } from "next";
-
 import { Open_Sans } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -58,6 +58,7 @@ export default function RootLayout({
     <html lang="en" className={openSans.className}>
       <body className="flex flex-col min-h-screen dark:bg-black text-black dark:text-white">
         <ClientProviders>
+          <SpeedInsights />
           <ToastContainer />
           <CheckAuthHeader />
           <main className="flex-1 flex flex-col">{children}</main>
