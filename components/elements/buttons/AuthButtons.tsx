@@ -3,13 +3,13 @@ import GlobalLoader from "@/components/Loaders/GlobalLoader";
 import { auth, githubProvider, googleProvider } from "@/firebase.config";
 import { useActions } from "@/hooks/useActions";
 import { useModalStore } from "@/hooks/useModalStore";
-
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AuthButtons() {
   const router = useRouter();
@@ -29,7 +29,6 @@ export default function AuthButtons() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google`,
           { accessToken: idToken }
         );
- 
 
         closeModal();
 
@@ -43,11 +42,13 @@ export default function AuthButtons() {
           await googleAuth(response.data);
         }
       } catch (error) {
-        console.error("Error sending token to backend:", error);
+        setLoading(false);
+        toast.error("Error To Sending Data, Check Your Internet Connection");
+        return;
       }
     } catch (error) {
       setLoading(false);
-      console.error("Error during Google sign-in:", error);
+      toast.error("Error during Google sign-in, try later");
     }
   };
 

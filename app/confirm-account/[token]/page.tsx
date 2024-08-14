@@ -19,7 +19,7 @@ export default async function ConfirmAccountPage({
   const { token } = params;
 
   if (!token) {
-    notFound();
+    return <p>here is token {token}, is undefined</p>;
   }
 
   try {
